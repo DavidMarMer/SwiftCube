@@ -33,7 +33,8 @@ app.use(cors({
   origin: ['https://davidmarmer.github.io'],
   // origin: ['http://localhost:4200', 'https://davidmarmer.github.io'],
   // origin: '*',
-  allowedHeaders: ['Content-Type', 'Access-Control-Allow-Origin'],
+  // allowedHeaders: ['Content-Type', 'Access-Control-Allow-Origin'],
+  allowedHeaders: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));
 app.use((req, res, next) => {
