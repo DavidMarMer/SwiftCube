@@ -21,7 +21,7 @@ export class NavigationLoggedComponent implements AfterViewInit {
   }
 
   verifyAdminUser() {
-    const URL = `https://swiftcube-production.up.railway.app/users/${localStorage.getItem("user.name")}`;
+    const URL = `https://swiftcube-production-2662.up.railway.app/users/${localStorage.getItem("user.name")}`;
 
     const response = fetch(URL,
     ).then(response => {

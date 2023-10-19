@@ -32,7 +32,7 @@ export class RegistrationComponent implements AfterViewInit {
 
   async registerUser() {
     if (this.matchPasswords()) {
-      const URL = "https://swiftcube-production.up.railway.app/users";
+      const URL = "https://swiftcube-production-2662.up.railway.app/users";
       const encryptedPassword = CryptoJS.AES.encrypt(this.user.password, "/nm8z3}KkeXVpsL").toString();
       const response = await fetch(URL, {
         method: "POST",
