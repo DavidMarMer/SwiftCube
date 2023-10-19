@@ -32,7 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors({
   // origin: ['http://localhost:4200', 'https://davidmartinezmerencioalixar.github.io'],
   origin: '*',
-  allowedHeaders: ['Content-Type'],
+  allowedHeaders: ['Content-Type', 'Access-Control-Allow-Origin'],
   methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));
 app.use((req, res, next) => {
