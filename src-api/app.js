@@ -30,8 +30,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors({
-  origin: ['https://davidmarmer.github.io'],
-  // origin: ['http://localhost:4200', 'https://davidmarmer.github.io'],
+  // origin: ['https://davidmarmer.github.io'],
+  origin: ['http://localhost:4200', 'https://davidmarmer.github.io'],
   // origin: '*',
   // allowedHeaders: ['Content-Type', 'Access-Control-Allow-Origin'],
   allowedHeaders: '*',
