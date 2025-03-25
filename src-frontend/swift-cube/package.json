@@ -5,6 +5,9 @@
     "ng": "ng",
     "start": "ng serve --open",
     "build": "ng build",
+    "build:start": "npm run build ; npm run start",
+    "clean": "rmdir /s /q \"node_modules\" ; del package-lock.json ; rmdir /s /q \".angular\" ; rmdir /s /q \"dist\"",
+    "clean:install": "npm run clean ; npm install",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
