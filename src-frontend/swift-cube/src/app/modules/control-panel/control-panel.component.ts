@@ -1,4 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
+import { properties } from 'src/app/aplication.properties';
 
 @Component({
   selector: 'app-control-panel',
@@ -12,7 +13,7 @@ export class ControlPanelComponent implements AfterViewInit {
   }
 
   verifyAdminUser() {
-    const URL = `https://swiftcube-production-2662.up.railway.app/users/${localStorage.getItem("user.name")}`;
+    const URL = `${properties.apiUrl}/users/${localStorage.getItem("user.name")}`;
 
     const response = fetch(URL,
     ).then(response => {

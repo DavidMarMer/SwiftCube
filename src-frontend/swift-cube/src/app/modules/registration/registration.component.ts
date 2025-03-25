@@ -1,6 +1,7 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { User } from '../user.model';
 import * as CryptoJS from "crypto-js";
+import { properties } from 'src/app/aplication.properties';
 
 @Component({
   selector: 'app-registration',
@@ -32,7 +33,7 @@ export class RegistrationComponent implements AfterViewInit {
 
   async registerUser() {
     if (this.matchPasswords()) {
-      const URL = "https://swiftcube-production-2662.up.railway.app/users";
+      const URL = `${properties.apiUrl}/users`;
       const encryptedPassword = CryptoJS.AES.encrypt(this.user.password, "/nm8z3}KkeXVpsL").toString();
       const response = await fetch(URL, {
         method: "POST",

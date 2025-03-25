@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, Renderer2 } from '@angular/core';
+import { properties } from 'src/app/aplication.properties';
 
 @Component({
   selector: 'app-administrate-cubes',
@@ -17,7 +18,7 @@ export class AdministrateCubesComponent implements AfterViewInit {
   }
 
   async getAllCubes() {
-    const URL = "https://swiftcube-production-2662.up.railway.app/cubes";
+    const URL = `${properties.apiUrl}/cubes`;
 
     const response = await fetch(URL
     ).then(response => {
@@ -241,7 +242,7 @@ export class AdministrateCubesComponent implements AfterViewInit {
     const movementTypes = (rowElements[1].children[1] as HTMLInputElement);
     const movementsNumber = (rowElements[2].children[1] as HTMLInputElement);
 
-    const URL = `https://swiftcube-production-2662.up.railway.app/cubes`;
+    const URL = `${properties.apiUrl}/cubes`;
 
     const response = fetch(URL, {
       method: "POST",
@@ -268,7 +269,7 @@ export class AdministrateCubesComponent implements AfterViewInit {
     const movementTypes = (rowElements[1].children[1] as HTMLInputElement).value;
     const movementsNumber = (rowElements[2].children[1] as HTMLInputElement).value;
 
-    const URL = `https://swiftcube-production-2662.up.railway.app/cubes/${oldName}`;
+    const URL = `${properties.apiUrl}/cubes/${oldName}`;
 
     const response = fetch(URL, {
       method: "PUT",
@@ -286,7 +287,7 @@ export class AdministrateCubesComponent implements AfterViewInit {
 
     const name = (rowElements[0].children[1] as HTMLInputElement).value;
 
-    const URL = `https://swiftcube-production-2662.up.railway.app/cubes/${name}`;
+    const URL = `${properties.apiUrl}/cubes/${name}`;
 
     const response = fetch(URL, {
       method: "DELETE"

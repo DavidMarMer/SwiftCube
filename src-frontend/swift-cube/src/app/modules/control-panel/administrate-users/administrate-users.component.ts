@@ -1,5 +1,6 @@
 import { Component, AfterViewInit, Renderer2 } from '@angular/core';
 import * as CryptoJS from "crypto-js";
+import { properties } from 'src/app/aplication.properties';
 
 @Component({
   selector: 'app-administrate-users',
@@ -17,7 +18,7 @@ export class AdministrateUsersComponent implements AfterViewInit {
   }
 
   async getAllUsers() {
-    const URL = "https://swiftcube-production-2662.up.railway.app/users";
+    const URL = `${properties.apiUrl}/users`;
 
     const response = await fetch(URL
     ).then(response => {
@@ -39,7 +40,7 @@ export class AdministrateUsersComponent implements AfterViewInit {
     if (filter === "" || filter === null || filter === undefined) {
       this.getAllUsers();
     } else {
-      const URL = `https://swiftcube-production-2662.up.railway.app/users/filter/${filter}`;
+      const URL = `${properties.apiUrl}/users/filter/${filter}`;
 
       const response = await fetch(URL
       ).then(response => {
@@ -181,7 +182,7 @@ export class AdministrateUsersComponent implements AfterViewInit {
 
     const encryptedPassword = 'gJKd"<M]z/;:T`vbWL]m:15t`.2cqJ';
 
-    const URL = "https://swiftcube-production-2662.up.railway.app/users?" + new URLSearchParams({
+    const URL = `${properties.apiUrl}/users?` + new URLSearchParams({
       oldUsername: oldUsername!,
       newUsername: newUsername
     });
@@ -207,7 +208,7 @@ export class AdministrateUsersComponent implements AfterViewInit {
     const encryptedPassword = 'gJKd"<M]z/;:T`vbWL]m:15t`.2cqJ';
     const encryptedNewPassword = CryptoJS.AES.encrypt(newPassword, "/nm8z3}KkeXVpsL").toString();
     const username = (((event.target as HTMLElement).parentNode!.children as HTMLCollection)[0].children[1] as HTMLInputElement).getAttribute("initial_value");
-    const URL = "https://swiftcube-production-2662.up.railway.app/users?" + new URLSearchParams({
+    const URL = `${properties.apiUrl}/users?` + new URLSearchParams({
       oldUsername: username!,
       newUsername: username!
     });
@@ -260,7 +261,7 @@ export class AdministrateUsersComponent implements AfterViewInit {
     const name = (rowElements[0].children[1] as HTMLInputElement).value;
     const encryptedPassword = 'NZZ"@#ks<0mk3<Q/@Q$FSoq{PVK;_a';
 
-    const URL = `https://swiftcube-production-2662.up.railway.app/users/${name}`;
+    const URL = `${properties.apiUrl}/users/${name}`;
 
     const response = fetch(URL, {
       method: "DELETE",

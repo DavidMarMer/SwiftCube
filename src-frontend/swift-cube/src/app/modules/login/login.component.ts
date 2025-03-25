@@ -1,6 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { User } from '../user.model';
 import * as CryptoJS from "crypto-js";
+import { properties } from 'src/app/aplication.properties';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent implements AfterViewInit {
   }
 
   async loginUser() {
-    const URL = "https://swiftcube-production-2662.up.railway.app/users/login";
+    const URL = `${properties.apiUrl}/users/login`;
     const encryptedPassword = CryptoJS.AES.encrypt(this.user.password, "/nm8z3}KkeXVpsL").toString();
 
     const response = await fetch(URL, {
