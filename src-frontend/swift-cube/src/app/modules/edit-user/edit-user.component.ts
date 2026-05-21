@@ -10,7 +10,7 @@ import { properties } from 'src/app/aplication.properties';
 })
 export class EditUserComponent implements AfterViewInit {
   ngAfterViewInit(): void {
-    (<HTMLInputElement>document.getElementById("formContainer")).scrollIntoView();
+    // (<HTMLInputElement>document.getElementById("formContainer")).scrollIntoView();
     this.user.username = localStorage.getItem("user.name") || "";
   }
 

@@ -1,59 +1,219 @@
 #administrateCubesDiv {
+    min-height: calc(100dvh - var(--navbar-height));
+    width: 100%;
+
     background-image: url(../../../../assets/img/form-background.png);
     background-repeat: no-repeat;
     background-size: cover;
-    width: 100%;
-    height: 811px;
-    position: relative;
+    background-position: center;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 #containerDiv {
+    width: min(1300px, 96vw);
+    height: min(85dvh, 900px);
+
     background-color: #D9D9D9;
     border-radius: 20px;
-    width: 900px;
-    height: 650px;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+#cubesList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    width: 100%;
+}
+
+#cubesList .row {
+    width: min(1100px, 95%);
+    margin: 0 auto;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* HEADER */
+#containerDiv > .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    flex: 0 0 auto;
 }
 
 #cubeTitle {
     font-weight: bold;
-    font-size: 40px;
+    font-size: clamp(28px, 3vw, 42px);
     font-family: 'Alkatra', sans-serif;
 }
 
-#cubesList {
-    max-height: 525px;
-    overflow-y: auto;
-}
-
-.totallyCentered {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 40px;
-}
-
-.row {
-    margin-bottom: 15px;
-}
-
-.dynamicButton, #newCubeButton {
-    font-size: 14px;
-    color: white;
-    background-color: #000074;
-    border-radius: 8px;
-    height: 25px;
-    margin: 3px;
-    border: none;
-}
-
 #newCubeButton {
-    font-size: 16px;
+    font-size: 15px;
     height: 40px;
-    width: 120px;
+    width: 140px;
+
+    background-color: #000074;
+    color: white;
+
     border-radius: 10px;
+    border: none;
+
+    cursor: pointer;
 }
 
+/* LISTA (IMPORTANTE: AQUÍ ESTÁ EL CAMBIO CLAVE) */
+#cubesList {
+    flex: 1;
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    margin-top: 15px;
+}
+
+/* ROW STYLE TIPO TABLA */
+.row {
+    display: flex;
+    width: 100%;
+
+    gap: 12px;
+
+    align-items: center;
+
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+
+    padding: 12px;
+
+    box-sizing: border-box;
+}
+
+.row > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* INPUTS */
+.row input {
+    width: 100%;
+    height: 44px;
+
+    font-size: 15px;
+
+    border-radius: 10px;
+    border: 1px solid #aaa;
+
+    padding: 0 12px;
+
+    box-sizing: border-box;
+}
+
+.row .dynamicButton {
+    flex: 0 0 auto;
+
+    min-width: 90px;
+    height: 36px;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    padding: 0 10px;
+    margin-top: 26px;
+
+    border-radius: 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+
+    border: none;
+
+    cursor: pointer;
+}
+
+/* BUTTONS */
+.dynamicButton {
+    font-size: 14px;
+    font-weight: 500;
+
+    height: 38px;
+    min-width: 80px;
+
+    padding: 0 14px;
+
+    color: white;
+
+    border: none;
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dynamicButton.edit,
+.dynamicButton.save {
+    background-color: #000074;
+}
+
+.dynamicButton.delete {
+    background-color: #b00020;
+}
+
+/* LABEL */
 .dynamicLabel {
     font-weight: bold;
+    font-size: 13px;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    #containerDiv {
+        height: auto;
+        max-height: 85dvh;
+    }
+
+    .row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .row .dynamicButton {
+        width: 100%;
+        margin-top: auto;
+    }
+
+    .row .dynamicButton {
+        width: 100%;
+        min-width: unset;
+
+        height: 34px;
+        font-size: 13px;
+    }
+
+    #newCubeButton {
+        width: 120px;
+        height: 36px;
+        font-size: 13px;
+    }
 }

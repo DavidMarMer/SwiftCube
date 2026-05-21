@@ -1,6 +1,6 @@
 #mainDiv {
     background-color: #FEFFCC;
-    height: 78vh;
+    min-height: calc(100dvh - var(--navbar-height) - 11dvh);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -109,7 +109,7 @@ td {
 
 @media (max-width: 1120px) {
     app-times-table {
-        height: 30vh;
+        height: 30dvh;
     }
 
     app-visual-scramble {

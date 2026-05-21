@@ -53,7 +53,6 @@ export class AdministrateCubesComponent implements AfterViewInit {
     this.renderer.appendChild(div, label);
     this.renderer.appendChild(div, input);
 
-    div.className = "col-3";
     label.htmlFor = "name";
     label.className = "dynamicLabel";
     label.textContent = "Name";
@@ -72,7 +71,6 @@ export class AdministrateCubesComponent implements AfterViewInit {
     this.renderer.appendChild(div, label);
     this.renderer.appendChild(div, input);
 
-    div.className = "col-3";
     label.htmlFor = "movement_types";
     label.classList.add("dynamicLabel");
     label.textContent = "Movement types";
@@ -90,7 +88,6 @@ export class AdministrateCubesComponent implements AfterViewInit {
     this.renderer.appendChild(div, label);
     this.renderer.appendChild(div, input);
 
-    div.className = "col-3";
     label.htmlFor = "movements_number";
     label.classList.add("dynamicLabel");
     label.textContent = "Movements number";
@@ -103,19 +100,19 @@ export class AdministrateCubesComponent implements AfterViewInit {
     /* Options buttons */
     let button = this.renderer.createElement("button") as HTMLButtonElement;
     this.renderer.appendChild(rowDiv, button);
-    button.className = "dynamicButton col-1";
+    button.className = "dynamicButton edit col-1";
     button.textContent = "Edit";
     button.addEventListener("click", function (event) { AdministrateCubesComponent.enableEdition(event); });
 
     button = this.renderer.createElement("button") as HTMLButtonElement;
     this.renderer.appendChild(rowDiv, button);
-    button.className = "dynamicButton col-1 d-none";
+    button.className = "dynamicButton save col-1 d-none";
     button.textContent = "Save";
     button.addEventListener("click", function (event) { AdministrateCubesComponent.updateCube(event); });
 
     button = this.renderer.createElement("button") as HTMLButtonElement;
     this.renderer.appendChild(rowDiv, button);
-    button.className = "dynamicButton col-1";
+    button.className = "dynamicButton delete col-1";
     button.textContent = "Delete";
     button.addEventListener("click", function (event) {
       if (confirm(`Are you sure you want to delete the cube ${cubeName}? If it is recreated, users will still lose their times`)) AdministrateCubesComponent.deleteCube(event);
@@ -128,7 +125,7 @@ export class AdministrateCubesComponent implements AfterViewInit {
     const rowDiv = this.renderer.createElement("div");
     rowDiv.className = "row align-items-center";
     cubesList.appendChild(rowDiv);
-    rowDiv.scrollIntoView();
+    // rowDiv.scrollIntoView();
 
     /* Name input */
     let div = this.renderer.createElement("div") as HTMLDivElement;
@@ -138,7 +135,6 @@ export class AdministrateCubesComponent implements AfterViewInit {
     this.renderer.appendChild(div, label);
     this.renderer.appendChild(div, input);
 
-    div.className = "col-3";
     label.htmlFor = "name";
     label.className = "dynamicLabel";
     label.textContent = "Name";
@@ -155,7 +151,6 @@ export class AdministrateCubesComponent implements AfterViewInit {
     this.renderer.appendChild(div, label);
     this.renderer.appendChild(div, input);
 
-    div.className = "col-3";
     label.htmlFor = "movement_types";
     label.classList.add("dynamicLabel");
     label.textContent = "Movement types";
@@ -171,7 +166,6 @@ export class AdministrateCubesComponent implements AfterViewInit {
     this.renderer.appendChild(div, label);
     this.renderer.appendChild(div, input);
 
-    div.className = "col-3";
     label.htmlFor = "movements_number";
     label.classList.add("dynamicLabel");
     label.textContent = "Movements number";
@@ -182,23 +176,24 @@ export class AdministrateCubesComponent implements AfterViewInit {
     /* Options buttons */
     let button = this.renderer.createElement("button") as HTMLButtonElement;
     this.renderer.appendChild(rowDiv, button);
-    button.className = "dynamicButton col-1 d-none";
+    button.className = "dynamicButton edit col-1 d-none";
     button.textContent = "Edit";
     button.addEventListener("click", function (event) { AdministrateCubesComponent.enableEdition(event); });
 
     button = this.renderer.createElement("button") as HTMLButtonElement;
     this.renderer.appendChild(rowDiv, button);
-    button.className = "dynamicButton col-1";
+    button.className = "dynamicButton save col-1";
     button.textContent = "Save";
     button.addEventListener("click", function (event) { AdministrateCubesComponent.createCube(event); });
 
     button = this.renderer.createElement("button") as HTMLButtonElement;
     this.renderer.appendChild(rowDiv, button);
-    button.className = "dynamicButton col-1";
+    button.className = "dynamicButton delete col-1";
     button.textContent = "Delete";
     button.addEventListener("click", function (event) {
       if (confirm(`Are you sure you want to stop creating this cube?`)) AdministrateCubesComponent.deleteCube(event);
     });
+    button.scrollIntoView();
   }
 
   static enableEdition(event: Event) {

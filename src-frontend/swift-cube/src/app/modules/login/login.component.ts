@@ -8,11 +8,11 @@ import { properties } from 'src/app/aplication.properties';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements AfterViewInit {
-  ngAfterViewInit(): void {
-    const formContainer = document.getElementById("formContainer");
-    if (formContainer != null) formContainer.scrollIntoView();
-  }
+export class LoginComponent {
+  // ngAfterViewInit(): void {
+  //   const formContainer = document.getElementById("formContainer");
+  //   if (formContainer != null) formContainer.scrollIntoView();
+  // }
 
   user: User = this.newUser();
 

@@ -28,4 +28,12 @@ export class ControlPanelComponent implements AfterViewInit {
       window.location.href = "";
     });
   }
+
+  goToUsers(): void {
+    window.location.href = 'control-panel/administrate-users';
+  }
+
+  goToCubes(): void {
+    window.location.href = 'control-panel/administrate-cubes';
+  }
 }

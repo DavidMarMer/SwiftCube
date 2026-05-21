@@ -8,10 +8,10 @@ import { properties } from 'src/app/aplication.properties';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.scss']
 })
-export class RegistrationComponent implements AfterViewInit {
-  ngAfterViewInit(): void {
-    (<HTMLInputElement>document.getElementById("formContainer")).scrollIntoView();
-  }
+export class RegistrationComponent {
+  // ngAfterViewInit(): void {
+  //   (<HTMLInputElement>document.getElementById("formContainer")).scrollIntoView();
+  // }
 
   user: User = this.newUser();
 

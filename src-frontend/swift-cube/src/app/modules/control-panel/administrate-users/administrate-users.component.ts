@@ -66,81 +66,86 @@ export class AdministrateUsersComponent implements AfterViewInit {
     const usersList = document.getElementById("usersList") as HTMLDivElement;
 
     const rowDiv = this.renderer.createElement("div");
-    rowDiv.className = "row align-items-center";
+    rowDiv.className = "row";
     usersList.appendChild(rowDiv);
 
-    /* Username input */
-    let div = this.renderer.createElement("div") as HTMLDivElement;
-    let label = this.renderer.createElement("label") as HTMLLabelElement;
-    let input = this.renderer.createElement("input") as HTMLInputElement;
+    /* USERNAME */
+    let div = this.renderer.createElement("div");
+    let label = this.renderer.createElement("label");
+    let input = this.renderer.createElement("input");
+
     this.renderer.appendChild(rowDiv, div);
     this.renderer.appendChild(div, label);
     this.renderer.appendChild(div, input);
 
-    div.className = "col-3";
-    label.htmlFor = "name";
     label.className = "dynamicLabel";
     label.textContent = "Username";
+
     input.type = "text";
-    input.id = "username";
-    input.name = "username";
     input.disabled = true;
     input.value = username;
     input.setAttribute("initial_value", username);
 
-    /* Is Admin checkbox */
-    div = this.renderer.createElement("div") as HTMLDivElement;
-    label = this.renderer.createElement("label") as HTMLLabelElement;
-    input = this.renderer.createElement("input") as HTMLInputElement;
+    /* ADMIN */
+    div = this.renderer.createElement("div");
+    label = this.renderer.createElement("label");
+    input = this.renderer.createElement("input");
+
     this.renderer.appendChild(rowDiv, div);
     this.renderer.appendChild(div, label);
     this.renderer.appendChild(div, input);
 
-    div.className = "col-2";
-    label.htmlFor = "movement_types";
-    label.classList.add("dynamicLabel");
+    div.className = "adminCell";
+
+    label.className = "dynamicLabel";
     label.textContent = "Admin";
+
     input.type = "checkbox";
-    input.id = "isAdmin";
-    input.name = "isAdmin";
     input.disabled = true;
     input.checked = isAdmin;
 
-    /* Options buttons */
-
-    let button = this.renderer.createElement("button") as HTMLButtonElement;
+    /* EDIT */
+    let button = this.renderer.createElement("button");
     this.renderer.appendChild(rowDiv, button);
-    button.className = "dynamicButton col-1";
+
+    button.className = "dynamicButton edit";
     button.textContent = "Edit";
-    button.addEventListener("click", function (event) { AdministrateUsersComponent.enableEdition(event); });
+    button.addEventListener("click", AdministrateUsersComponent.enableEdition);
 
-    button = this.renderer.createElement("button") as HTMLButtonElement;
+    /* SAVE */
+    button = this.renderer.createElement("button");
     this.renderer.appendChild(rowDiv, button);
-    button.className = "dynamicButton col-1 d-none";
+
+    button.className = "dynamicButton save d-none";
     button.textContent = "Save";
-    button.addEventListener("click", function (event) { AdministrateUsersComponent.updateUser(event); });
+    button.addEventListener("click", AdministrateUsersComponent.updateUser);
 
-    button = this.renderer.createElement("button") as HTMLButtonElement;
+    /* RESET */
+    button = this.renderer.createElement("button");
     this.renderer.appendChild(rowDiv, button);
-    button.className = "dynamicButton col-2";
+
+    button.className = "dynamicButton reset";
     button.textContent = "Reset password";
-    button.addEventListener("click", function (event) { AdministrateUsersComponent.resetPassword(event); });
+    button.addEventListener("click", AdministrateUsersComponent.resetPassword);
 
-    button = this.renderer.createElement("button") as HTMLButtonElement;
+    /* DELETE */
+    button = this.renderer.createElement("button");
     this.renderer.appendChild(rowDiv, button);
-    button.className = "dynamicButton col-1";
+
+    button.className = "dynamicButton delete";
     button.textContent = "Delete";
-    button.addEventListener("click", function (event) {
-      if (confirm(`Are you sure you want to delete the user ${username}?`)) AdministrateUsersComponent.deleteUser(event);
+    button.addEventListener("click", () => {
+      if (confirm(`Delete user ${username}?`)) {
+        AdministrateUsersComponent.deleteUser;
+      }
     });
 
-    /* New password span */
-    div = this.renderer.createElement("div") as HTMLDivElement;
-    let span = this.renderer.createElement("span") as HTMLSpanElement;
+    /* PASSWORD OUTPUT */
+    div = this.renderer.createElement("div");
+    const span = this.renderer.createElement("span");
+
     this.renderer.appendChild(rowDiv, div);
     this.renderer.appendChild(div, span);
-
-    div.className = "col-2";
   }
 
   static enableEdition(event: Event) {

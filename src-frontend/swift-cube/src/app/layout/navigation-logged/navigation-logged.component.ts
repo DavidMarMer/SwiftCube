@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { properties } from 'src/app/aplication.properties';
 
 @Component({
@@ -6,14 +6,17 @@ import { properties } from 'src/app/aplication.properties';
   templateUrl: './navigation-logged.component.html',
   styleUrls: ['./navigation-logged.component.scss']
 })
-export class NavigationLoggedComponent implements AfterViewInit {
-  ngAfterViewInit(): void {
-    let usernameText = document.getElementById("username");
-    if (usernameText != null) usernameText.textContent = localStorage.getItem("user.name");
+export class NavigationLoggedComponent implements OnInit {
+
+  username: string | null = null;
+  isAdmin = false;
+
+  ngOnInit(): void {
+    this.username = localStorage.getItem("user.name");
     this.verifyAdminUser();
   }
 
-  toLoggedOutNavigation() {
+  toLoggedOutNavigation(): void {
     localStorage.setItem("loggedUser", "n");
     localStorage.removeItem("user.data");
     localStorage.removeItem("user.name");
@@ -21,30 +24,34 @@ export class NavigationLoggedComponent implements AfterViewInit {
     this.toHome();
   }
 
-  verifyAdminUser() {
-    const URL = `${properties.apiUrl}/users/${localStorage.getItem("user.name")}`;
+  async verifyAdminUser(): Promise<void> {
+    const username = localStorage.getItem("user.name");
+    if (!username) return;
 
-    const response = fetch(URL,
-    ).then(response => {
-      if (response.ok) response.json().then(user => {
-        const adminOptionsButton = document.getElementById("controlPanel") as HTMLButtonElement;
-        if (user && user.admin) {
-          adminOptionsButton.classList.remove("noDisplay");
-        } else {
-          adminOptionsButton.classList.add("noDisplay");
-        }
-      });
-    }).catch(error => {
+    const URL = `${properties.apiUrl}/users/${username}`;
+
+    try {
+      const response = await fetch(URL);
+
+      if (!response.ok) {
+        this.isAdmin = false;
+        return;
+      }
+
+      const user = await response.json();
+      this.isAdmin = !!user?.admin;
+
+    } catch (error) {
       console.error("Error getting the user data:", error);
       window.location.href = "";
-    });
+    }
   }
 
-  toEditUser() {
+  toEditUser(): void {
     window.location.href = "userdata";
   }
 
-  toHome() {
+  toHome(): void {
     window.location.href = "";
   }
 }

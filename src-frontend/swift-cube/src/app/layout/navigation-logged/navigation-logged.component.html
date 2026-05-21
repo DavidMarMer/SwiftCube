@@ -1,17 +1,56 @@
-<nav class="container-flex">
+<nav>
+    <!-- LOGOUT -->
     <div id="logout">
-        <img id="logout-img" src="assets/img/logout-icon.png" alt="Logout icon" (click)="toLoggedOutNavigation()">
+        <img
+            id="logout-img"
+            src="assets/img/logout-icon.png"
+            alt="Logout icon"
+            (click)="toLoggedOutNavigation()"
+        >
     </div>
-    <div id="logo" class="container-flex" (click)="toHome()">
-        <img id="logo-icon" src="assets/img/swiftcube-logo.png" alt="Swift Cube logo">
+
+    <!-- LOGO -->
+    <div id="logo" (click)="toHome()">
+        <img
+            id="logo-icon"
+            class="desktop-logo"
+            src="assets/img/swiftcube-logo.png"
+            alt="Swift Cube"
+        >
+
+        <img
+            id="logo-icon-mobile"
+            class="mobile-logo"
+            src="assets/img/swiftcube-logo-text.png"
+            alt="Swift Cube"
+        >
+
         <span id="logo-text">Swift Cube</span>
     </div>
 
+    <!-- USER AREA -->
     <div id="userData">
-        <button id="controlPanel" class="noDisplay" routerLink="control-panel">Control panel</button>
+
+        <button
+            id="controlPanel"
+            *ngIf="isAdmin"
+            routerLink="control-panel">
+            Control panel
+        </button>
+
         <div id="user-info">
-            <span id="username"></span>
-            <img id="user-img" src="assets/img/user-icon.png" alt="User icon" (click)="toEditUser()">
+            <span id="username">
+                {{ username }}
+            </span>
+
+            <img
+                id="user-img"
+                class="navbar-icon"
+                src="assets/img/user-icon.png"
+                alt="User icon"
+                (click)="toEditUser()"
+            >
         </div>
+
     </div>
 </nav>
