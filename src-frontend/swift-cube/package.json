@@ -6,10 +6,10 @@
     "start": "ng serve --open",
     "build": "ng build",
     "build:start": "npm run build ; npm run start",
-    "clean": "rmdir /s /q \"node_modules\" ; del package-lock.json ; rmdir /s /q \".angular\" ; rmdir /s /q \"dist\"",
+    "clean": "rm -rf ./node_modules ; rm -f package-lock.json ; rm -rf ./angular ; rm -rf ./dist",
     "clean:install": "npm run clean ; npm install",
     "watch": "ng build --watch --configuration development",
-    "deploy": "ng deploy --base-href=https://DavidMarMer.github.io/SwiftCube/",
+    "deploy": "npm run build && sudo rm -rf /var/www/swiftcube/* && sudo cp -r dist/swift-cube/* /var/www/swiftcube/ && sudo systemctl reload apache2",
     "test": "ng test"
   },
   "private": true,

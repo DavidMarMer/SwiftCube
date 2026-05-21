@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const dotenv = require('dotenv').config();
+const dotenv = require('dotenv').config({ path: path.join(__dirname, '.env') });
 const cors = require('cors');
 const cryptojs = require('crypto-js');
 const secretKey = "/nm8z3}KkeXVpsL";
@@ -30,8 +30,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors({
-  // origin: ['https://davidmarmer.github.io'],
-  origin: ['http://localhost:4200', 'https://davidmarmer.github.io'],
+  origin: ['https://swiftcube.server-zeni.net'],
+  // origin: ['http://localhost:4200', 'https://davidmarmer.github.io'],
   // origin: '*',
   // allowedHeaders: ['Content-Type', 'Access-Control-Allow-Origin'],
   allowedHeaders: '*',
