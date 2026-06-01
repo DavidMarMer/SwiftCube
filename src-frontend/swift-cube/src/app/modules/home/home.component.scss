@@ -1,11 +1,25 @@
+#page {
+  height: calc(100dvh - var(--navbar-height));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+app-scramble-local {
+  flex: 0 0 auto;
+}
+
 #mainDiv {
-    background-color: #FEFFCC;
-    min-height: calc(100dvh - var(--navbar-height) - 11dvh);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+  flex: 1;
+  background-color: #FEFFCC;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+  overflow: hidden;
 }
 
 #timerDiv {
@@ -109,7 +123,7 @@ td {
 
 @media (max-width: 1120px) {
     app-times-table {
-        height: 30dvh;
+        height: 32dvh;
     }
 
     app-visual-scramble {
@@ -129,4 +143,14 @@ td {
     #time {
         font-size: 3.5rem;
     }
+}
+
+#mainDiv, #timerDiv, #time {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+#mainDiv {
+  touch-action: none;
 }

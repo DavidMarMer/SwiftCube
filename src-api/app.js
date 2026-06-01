@@ -31,9 +31,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors({
   origin: ['https://swiftcube.server-zeni.net'],
-  // origin: ['http://localhost:4200', 'https://davidmarmer.github.io'],
-  // origin: '*',
-  // allowedHeaders: ['Content-Type', 'Access-Control-Allow-Origin'],
+  // origin: ['http://localhost:4200', 'https://swiftcube.server-zeni.net'],
   allowedHeaders: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));

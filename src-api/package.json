@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "start:dev": "SET DEBUG=* & nodemon start:dev"
+    "start:dev": "SET DEBUG=* & nodemon start:dev",
+    "restart": "pm2 restart swiftcube-api"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

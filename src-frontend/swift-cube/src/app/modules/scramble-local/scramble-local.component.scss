@@ -1,66 +1,171 @@
 #scrambleDiv {
-    height: 11dvh;
+    width: 100%;
+    min-height: 11dvh;
+
     background-color: #000074;
     color: white;
-    font-size: 24px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding:
+        clamp(10px, 1.2dvh, 18px)
+        clamp(14px, 2vw, 28px);
+
+    gap: clamp(10px, 1.5dvh, 18px);
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+}
+
+#cubeNameDiv {
+    width: 100%;
+
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-}
 
-#cubeNameDiv {
+    gap: 8px;
+
     font-family: monospace;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding-top: 10px;
+
+    margin-bottom: 4px;
 }
 
 #cubeNames {
-    border-radius: 8px;
-    margin-right: 10px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    background-color: #161b63;
+    color: #fff;
+
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 6px;
+
+    padding: 2px 8px 2px 8px;
+
+    font-size: 12px;
+    height: 24px;
+
+    outline: none;
+}
+
+#cubeNames:hover {
+    cursor: pointer;
+    background-color: #1b227a;
 }
 
 #cubeNameSpan {
-    font-size: 18px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
+    font-size: 12px;
+    font-weight: 600;
+    opacity: 0.8;
+    letter-spacing: 0.5px;
+    user-select: none;
+    transition:
+        opacity 0.15s ease,
+        transform 0.15s ease;
 }
 
 #cubeNameSpan:hover {
     cursor: pointer;
+
+    opacity: 1;
+
+    transform: scale(1.04);
 }
 
 #scramble {
+    margin: 0;
+    text-align: center;
     font-family: monospace;
-    padding-left: 20px;
-    padding-right: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    margin-top: 20px;
+    line-height: 1.25;
+    letter-spacing: 0.5px;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    user-select: none;
 }
 
-@media (max-width: 768px) {
+.scramble-2x2 {
+    font-size: clamp(20px, 2.4vw, 34px);
+    width: min(100%);
+}
+
+.scramble-3x3 {
+    font-size: clamp(17px, 2.2vw, 32px);
+    width: min(100%);
+}
+
+.scramble-4x4 {
+    font-size: clamp(16px, 1.8vw, 28px);
+    width: min(71%);
+}
+
+.scramble-5x5 {
+    font-size: clamp(14px, 1.4vw, 24px);
+    width: min(89%);
+}
+
+.scramble-6x6 {
+    font-size: clamp(12px, 1.2vw, 22px);
+    width: min(81%);
+}
+
+.scramble-7x7 {
+    font-size: clamp(12px, 1.2vw, 22px);
+    width: min(99%);
+}
+
+/* Tablets */
+@media (max-width: 900px) {
+
     #scrambleDiv {
-        font-size: 14px;
+        padding:
+            12px
+            18px;
+    }
+}
+
+/* Móviles */
+@media (max-width: 600px) {
+
+    #scrambleDiv {
+        min-height: auto;
+
+        padding:
+            12px
+            14px;
     }
 
-    #cubeNameSpan {
-        font-size: 10px;
+    #cubeNameDiv {
+        gap: 8px;
+    }
+
+    #cubeNames {
+        max-width: 140px;
+    }
+
+    .scramble-3x3 {
+        width: min(98%);
+    }
+
+    .scramble-4x4 {
+        width: min(92%);
+    }
+
+    .scramble-5x5 {
+        width: min(97%);
+    }
+
+    .scramble-6x6 {
+        width: min(99%);
+    }
+
+    .scramble-7x7 {
+        width: min(92%);
     }
 }

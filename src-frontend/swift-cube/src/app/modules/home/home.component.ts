@@ -23,25 +23,35 @@ export class HomeComponent implements AfterViewInit {
     cubeNames?.addEventListener("change", () => {
       const selectedCube = cubeNames.options[cubeNames.selectedIndex].value;
 
-      let heightValue = "";
-      switch (selectedCube) {
-        case "3x3x3": case "3x3x3 OH": case "3x3x3 BLD": case "2x2x2":
-          heightValue = "100px";
-          break;
-        case "4x4x4":
-          heightValue = "130px";
-          break;
-        case "5x5x5":
-          heightValue = "150px";
-          break;
-        case "6x6x6":
-          heightValue = "190px";
-          break;
-        case "7x7x7":
-          heightValue = "230px";
-          break;
+      const scramble = document.getElementById("scramble");
+
+      scramble?.classList.remove(
+        "scramble-2x2",
+        "scramble-3x3",
+        "scramble-4x4",
+        "scramble-5x5",
+        "scramble-6x6",
+        "scramble-7x7"
+      );
+
+      if (selectedCube.includes("2x2")) {
+        scramble?.classList.add("scramble-2x2");
+
+      } else if (selectedCube.includes("3x3")) {
+        scramble?.classList.add("scramble-3x3");
+
+      } else if (selectedCube.includes("4x4")) {
+        scramble?.classList.add("scramble-4x4");
+
+      } else if (selectedCube.includes("5x5")) {
+        scramble?.classList.add("scramble-5x5");
+
+      } else if (selectedCube.includes("6x6")) {
+        scramble?.classList.add("scramble-6x6");
+
+      } else if (selectedCube.includes("7x7")) {
+        scramble?.classList.add("scramble-7x7");
       }
-      scrambleDiv.style.height = heightValue;
 
       if (selectedCube.indexOf("3x3x3") !== -1) {
         visualScrambleDiv.style.display = "block";
@@ -91,7 +101,6 @@ export class HomeComponent implements AfterViewInit {
       if (this.runningTimer) {
         this.stopTimer();
       } else if (!this.keyPressed && event.key === ' ') {
-        time.textContent = '0.00';
         if (time != null) time.style.color = 'red';
         this.keyPressed = true;
         this.startTime = Date.now();
@@ -101,6 +110,7 @@ export class HomeComponent implements AfterViewInit {
           if (this.readyToStart) {
             if (time != null) {
               time.style.color = 'green';
+              time.textContent = '0.00';
             }
           }
         }, 10);
@@ -128,7 +138,6 @@ export class HomeComponent implements AfterViewInit {
       if (this.runningTimer) {
         this.stopTimer();
       } else if (!this.keyPressed && event.button === 0 && (targetId === "mainDiv" || targetId === "time")) {
-        time.textContent = '0.00';
         if (time != null) time.style.color = 'red';
         this.keyPressed = true;
         this.startTime = Date.now();
@@ -138,6 +147,7 @@ export class HomeComponent implements AfterViewInit {
           if (this.readyToStart) {
             if (time != null) {
               time.style.color = 'green';
+              time.textContent = '0.00';
             }
           }
         }, 10);
@@ -168,7 +178,6 @@ export class HomeComponent implements AfterViewInit {
         this.stopTimer();
       } else if ((targetId === "mainDiv" || targetId === "time")) {
         event.preventDefault();
-        time.textContent = '0.00';
         if (time != null) time.style.color = 'red';
         this.keyPressed = true;
         this.startTime = Date.now();
@@ -178,6 +187,7 @@ export class HomeComponent implements AfterViewInit {
           if (this.readyToStart) {
             if (time != null) {
               time.style.color = 'green';
+              time.textContent = '0.00';
             }
           }
         }, 10);
@@ -250,10 +260,22 @@ export class HomeComponent implements AfterViewInit {
     }).then(response => {
       if (response.ok) {
         response.json().then(deletedSolve => {
-          window.location.reload();
+          const cubeNames = <HTMLSelectElement>document.getElementById("cubeNames");
+          const cubeName = cubeNames.options[cubeNames.selectedIndex].value;
+          this.refreshSolves(cubeName);
         });
       }
     });
+  }
+
+  refreshSolves(cubeName: string) {
+    const timesTable = document.getElementById("currentTimeTable") as HTMLTableElement;
+    const header = timesTable.children[0];
+
+    timesTable.innerHTML = "";
+    timesTable.appendChild(header);
+
+    this.showSolvesList(cubeName);
   }
 
   saveSolve(scramble: any, cubeName: any) {
@@ -330,6 +352,13 @@ export class HomeComponent implements AfterViewInit {
     }
   }
 
+  onResetSolves() {
+    this.calculateAvgs([]);
+    const cubeNames = <HTMLSelectElement>document.getElementById("cubeNames");
+    const cubeName = cubeNames.options[cubeNames.selectedIndex].value;
+    this.showSolvesList(cubeName);
+  }
+
   appendSolveToList(lastSolve: any, nextSolveid: any) {
     const timesTable = document.getElementById("currentTimeTable") as HTMLTableElement;
 
@@ -366,15 +395,11 @@ export class HomeComponent implements AfterViewInit {
     const solveRow = document.getElementById("showScrambleTable")?.children[1] as HTMLTableRowElement;
     const deleteButton = document.getElementById("deleteSolveButton") as HTMLButtonElement;
 
-    solveRow.children[0].textContent = round;
-    solveRow.children[1].textContent = time;
-    solveRow.children[2].textContent = scramble;
+    // solveRow.children[0].textContent = round;
+    solveRow.children[0].textContent = time;
+    solveRow.children[1].textContent = scramble;
 
     deleteButton.setAttribute("solve_round", round);
-
-    deleteButton?.addEventListener("onclick", () => {
-
-    })
   }
 
   generateScramble() {

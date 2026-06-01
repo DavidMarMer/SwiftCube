@@ -171,85 +171,40 @@ function getAllAverages(solvesAmount, solves) {
 
 function calculateAverage(solves, avgAmount, outAmount) {
   const solvesAmount = solves.solve_ids.length;
-  let minutesSum = 0;
-  let minutesCont = 0;
-  let secondsSum = 0;
-  times = [];
 
-  for (let i = solvesAmount - 1; i > solvesAmount - avgAmount - 1; i--) {
-    const solveTime = solves.solve_ids[i].time;
-    times.push(solveTime);
+  const times = [];
+
+  for (
+    let i = solvesAmount - 1;
+    i > solvesAmount - avgAmount - 1;
+    i--
+  ) {
+    times.push(
+      parseTimeToMilliseconds(
+        solves.solve_ids[i].time
+      )
+    );
   }
 
-  times = removeBestAndWorstTime(times, outAmount);
+  const filteredTimes =
+    removeBestAndWorstTime(times, outAmount);
 
-  for (let i = times.length - 1; i >= 0; i--) {
-    const solveTime = times[i];
-    if (solveTime.charAt(solveTime.length - 1) === "m") {
-      const minutes = solveTime.substring(0, solveTime.indexOf(":"));
-      minutesSum += Number.parseInt(minutes);
-      secondsSum += Number.parseFloat(solveTime.substring(solveTime.indexOf(":") + 1, solveTime.length - 2));
-      minutesCont++;
-    } else {
-      secondsSum += Number.parseFloat(solveTime.substring(0, solveTime.length - 2));
+  const total =
+    filteredTimes.reduce(
+      (sum, current) => sum + current,
+      0
+    );
 
-    }
-  }
+  const average =
+    Math.round(total / filteredTimes.length);
 
-  let minutesMo3 = (minutesSum / minutesCont).toString();
-  let secondsMo3 = (secondsSum / (avgAmount - outAmount * 2)).toFixed(2);
-
-  return formatTime(minutesMo3, secondsMo3);
+  return formatMilliseconds(average);
 }
 
 function removeBestAndWorstTime(times, outAmount) {
-  let bestTime = 0;
-  let bestTimeMinutes, bestTimeSeconds, bestTimeMilliseconds;
+  const sorted = [...times].sort((a, b) => a - b);
 
-  let worstTime = 0;
-  let worstTimeMinutes, worstTimeSeconds, worstTimeMilliseconds;
-  for (let i = 0; i < outAmount; i++) {
-    for (let i = 0; i < times.length; i++) {
-      let minutes, seconds;
-      if (times[i].indexOf(":") !== -1) {
-        minutes = times[i].substring(0, times[i].indexOf(":"));
-        seconds = times[i].substring(times[i].indexOf(":") + 1, times[i].indexOf("."));
-      } else {
-        minutes = 0;
-        seconds = times[i].substring(0, times[i].indexOf("."));
-      }
-      const milliseconds = times[i].substring(times[i].indexOf(".") + 1);
-
-      if (bestTime === 0 ||
-        minutes < bestTimeMinutes ||
-        minutes === bestTimeMinutes && seconds < bestTimeSeconds ||
-        minutes === bestTimeMinutes && seconds === bestTimeSeconds && milliseconds < bestTimeMilliseconds) {
-        bestTime = times[i];
-        bestTimeMinutes = minutes;
-        bestTimeSeconds = seconds;
-        bestTimeMilliseconds = milliseconds;
-
-        if (worstTime === 0) {
-          worstTime = times[i];
-          worstTimeMinutes = minutes;
-          worstTimeSeconds = seconds;
-          worstTimeMilliseconds = milliseconds;
-        }
-      } else if (minutes > worstTimeMinutes ||
-        minutes === worstTimeMinutes && seconds > worstTimeSeconds ||
-        minutes === worstTimeMinutes && seconds === worstTimeSeconds && milliseconds > worstTimeMilliseconds) {
-        worstTime = times[i];
-        worstTimeMinutes = minutes;
-        worstTimeSeconds = seconds;
-        worstTimeMilliseconds = milliseconds;
-      }
-    }
-
-    times.splice(times.indexOf(bestTime), 1);
-    times.splice(times.indexOf(worstTime), 1);
-  }
-
-  return times;
+  return sorted.slice(outAmount, sorted.length - outAmount);
 }
 
 function formatTime(minutesMo3, secondsMo3) {
@@ -262,5 +217,90 @@ function formatTime(minutesMo3, secondsMo3) {
 
   return !isNaN(minutesMo3) ? `${minutesMo3}:${secondsMo3} m` : `${secondsMo3} s`;
 }
+
+function parseTimeToMilliseconds(timeString) {
+  timeString = timeString.trim();
+
+  // Ejemplo: "1:05.34 m"
+  if (timeString.includes(":")) {
+    const minutes = parseInt(
+      timeString.substring(0, timeString.indexOf(":")),
+      10
+    );
+
+    const seconds = parseFloat(
+      timeString.substring(
+        timeString.indexOf(":") + 1,
+        timeString.length - 2
+      )
+    );
+
+    return Math.round((minutes * 60 + seconds) * 1000);
+  }
+
+  // Ejemplo: "13.42 s"
+  const seconds = parseFloat(
+    timeString.substring(0, timeString.length - 2)
+  );
+
+  return Math.round(seconds * 1000);
+}
+
+function formatMilliseconds(ms) {
+  const totalSeconds = ms / 1000;
+
+  if (totalSeconds < 60) {
+    return `${totalSeconds.toFixed(2)} s`;
+  }
+
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = (totalSeconds % 60).toFixed(2).padStart(5, "0");
+
+  return `${minutes}:${seconds} m`;
+}
+
+/* DELETE all solves of current cube party */
+router.delete('/all', function (req, res, next) {
+  Cube.findOne({ name: req.query.cube_name }).exec(function (err, cube) {
+    if (err) return res.status(500).send(err);
+    if (!cube) return res.status(404).send("Cube not found");
+
+    Room.findOne({
+      room_code: req.query.room_code,
+      cube_name: cube._id
+    }).exec(function (err, room) {
+      if (err) return res.status(500).send(err);
+      if (!room) return res.status(404).send("Room not found");
+
+      User.findOne({ username: req.query.username }).exec(function (err, user) {
+        if (err) return res.status(500).send(err);
+        if (!user) return res.status(404).send("User not found");
+
+        Party.findOne({
+          "data.user_id": user._id,
+          "data.room_id": room._id
+        }).populate("solve_ids").exec(async function (err, party) {
+          if (err) return res.status(500).send(err);
+          if (!party) return res.status(404).send("Party not found");
+
+          const solveIds = party.solve_ids.map(s => s._id);
+
+          try {
+            // borrar solves reales
+            await Solve.deleteMany({ _id: { $in: solveIds } });
+
+            // limpiar party
+            party.solve_ids = [];
+            await party.save();
+
+            return res.status(200).json({ success: true });
+          } catch (e) {
+            return res.status(500).send(e);
+          }
+        });
+      });
+    });
+  });
+});
 
 module.exports = router;

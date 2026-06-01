@@ -1,7 +1,15 @@
 <div id="timesTable">
     <table id="allTimeTable">
         <tr>
-            <th></th>
+            <th>
+                <button
+                    id="deleteAllSolvesButton"
+                    type="button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#confirmDeleteAllSolves">
+                        Clear Solves
+                </button>
+            </th>
             <th>current</th>
             <th>best</th>
         </tr>
@@ -74,4 +82,37 @@
         </tr>
     </table>
     <p id="loginWarning">Must be logged in</p>
+
+    <div class="modal fade" id="confirmDeleteAllSolves" tabindex="-1" aria-labelledby="confirmDeleteAllSolvesLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title" id="confirmDeleteAllSolvesLabel">
+                    Confirm deletion
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+            Are you sure you want to delete all solves for this cube? This action cannot be undone.
+            </div>
+
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                class="btn btn-danger"
+                id="confirmDeleteAllSolvesButton"
+                data-bs-dismiss="modal">
+                Delete
+            </button>
+            </div>
+        </div>
+    </div>
+
+  </div>
 </div>
